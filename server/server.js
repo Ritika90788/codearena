@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import dotenv from 'dotenv';
@@ -129,7 +130,36 @@ app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
   }
-  res.sendFile(path.join(clientDistPath, 'index.html'));
+  const indexPath = path.join(clientDistPath, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  res.status(200).send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>CodeArena Server Running</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: system-ui, -apple-system, sans-serif; background-color: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;">
+        <div style="background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 32px; max-width: 520px; width: 100%; text-align: center; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);">
+          <div style="font-size: 2rem; margin-bottom: 8px;">🚀</div>
+          <h2 style="margin: 0 0 12px; color: #f43f5e;">CodeArena Backend is Live!</h2>
+          <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px;">
+            The Node.js API server is running and connected to MongoDB Atlas.
+          </p>
+          <div style="background-color: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; text-align: left; font-size: 0.85rem;">
+            <p style="margin: 0 0 8px; font-weight: 600; color: #e2e8f0;">⚠️ Frontend (client/dist) build nahi mila:</p>
+            <p style="margin: 0 0 12px; color: #94a3b8;">Render Dashboard ke <b>Settings</b> mein jakar <b>Build Command</b> ko change karein:</p>
+            <code style="display: block; background: #1e293b; color: #38bdf8; padding: 10px; border-radius: 6px; font-family: monospace; word-break: break-all;">npm --prefix client install && npm --prefix client run build && npm --prefix server install</code>
+          </div>
+          <p style="margin-top: 20px; font-size: 0.85rem; color: #64748b;">
+            Health check: <a href="/api/health" style="color: #38bdf8;">/api/health</a>
+          </p>
+        </div>
+      </body>
+    </html>
+  `);
 });
 
 // Centralized error handler

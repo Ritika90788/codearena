@@ -402,3 +402,76 @@ body {
   }
 }
 
+/* Coding Arena Responsive Panels */
+.arena-mobile-switcher {
+  display: none !important;
+}
+
+@media (max-width: 1023px) {
+  .arena-mobile-switcher {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .arena-left-panel {
+    display: flex !important;
+    width: 42% !important;
+    flex: 0 0 42% !important;
+    min-width: 340px !important;
+  }
+  .arena-right-panel {
+    display: flex !important;
+    flex: 1 1 58% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .arena-left-panel.is-active {
+    display: flex !important;
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .arena-left-panel.is-hidden {
+    display: none !important;
+  }
+  .arena-right-panel.is-active {
+    display: flex !important;
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .arena-right-panel.is-hidden {
+    display: none !important;
+  }
+}
+
+/* Mission Workspace Responsive Panels */
+@media (min-width: 1024px) {
+  .mission-left-pane {
+    display: flex !important;
+  }
+  .mission-right-pane {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .mission-left-pane.is-active {
+    display: flex !important;
+    width: 100% !important;
+  }
+  .mission-left-pane.is-hidden {
+    display: none !important;
+  }
+  .mission-right-pane.is-active {
+    display: flex !important;
+    width: 100% !important;
+  }
+  .mission-right-pane.is-hidden {
+    display: none !important;
+  }
+}
+
+
+

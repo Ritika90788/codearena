@@ -1,0 +1,8 @@
+# Render deployment configuration
+services:
+  - type: web
+    name: codearena
+    runtime: node
+    rootDir: server
+    buildCommand: npm --prefix ../client install && npm --prefix ../client run build && npm install
+    startCommand: node server.js

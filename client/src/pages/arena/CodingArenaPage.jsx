@@ -1059,7 +1059,7 @@ class Solution:
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {/* Mobile View Switcher (Problem vs Code Editor) */}
           <div
-            className="flex lg:hidden"
+            className="arena-mobile-switcher"
             style={{
               backgroundColor: 'var(--bg-tertiary)',
               borderRadius: '6px',
@@ -1246,16 +1246,14 @@ class Solution:
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
         {/* Left Panel: Problem Statement */}
         <div
-          className={`${mobileArenaTab === 'problem' ? 'flex' : 'hidden'} lg:flex`}
+          className={`arena-left-panel ${mobileArenaTab === 'problem' ? 'is-active' : 'is-hidden'}`}
           style={{
-            flex: mobileArenaTab === 'problem' ? '1 1 100%' : undefined,
-            width: mobileArenaTab === 'problem' ? '100%' : '40%',
-            minWidth: 0,
+            display: 'flex',
+            flexDirection: 'column',
             borderRight: '1px solid var(--border-primary)',
             backgroundColor: 'var(--bg-primary)',
             overflowY: 'auto',
             padding: '1.25rem',
-            flexDirection: 'column',
             gap: '1.25rem',
           }}
         >
@@ -1334,18 +1332,18 @@ class Solution:
 
         {/* Center / Right Section: Code Editor & Test Cases */}
         <div
-          className={`${mobileArenaTab === 'code' ? 'flex' : 'hidden'} lg:flex`}
+          className={`arena-right-panel ${mobileArenaTab === 'code' ? 'is-active' : 'is-hidden'}`}
           style={{
-            flex: 1,
-            width: mobileArenaTab === 'code' ? '100%' : undefined,
+            display: 'flex',
             flexDirection: 'column',
-            overflow: 'hidden'
+            overflow: 'hidden',
           }}
         >
           {/* Editor Header Tool Bar */}
           <div
             style={{
               height: '42px',
+              flexShrink: 0,
               backgroundColor: 'var(--bg-secondary)',
               borderBottom: '1px solid var(--border-primary)',
               display: 'flex',
@@ -1401,7 +1399,7 @@ class Solution:
           </div>
 
           {/* Monaco Editor Canvas */}
-          <div style={{ flex: 1, position: 'relative' }}>
+          <div style={{ flex: 1, minHeight: 0, position: 'relative', overflow: 'hidden' }}>
             <Editor
               height="100%"
               language={language}
@@ -1426,6 +1424,7 @@ class Solution:
           <div
             style={{
               height: '240px',
+              flexShrink: 0,
               backgroundColor: 'var(--bg-secondary)',
               borderTop: '1px solid var(--border-primary)',
               display: 'flex',

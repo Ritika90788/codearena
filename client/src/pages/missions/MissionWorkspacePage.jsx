@@ -1030,8 +1030,9 @@ public:
             LEFT PANE: BUSINESS CONTEXT & SPECS
            ============================================== */}
         <div
-          className={`${mobileTab === 'specs' ? 'flex' : 'hidden'} lg:flex`}
+          className={`mission-left-pane ${mobileTab === 'specs' ? 'is-active' : 'is-hidden'}`}
           style={{
+            display: 'flex',
             flexDirection: 'column',
             backgroundColor: 'var(--bg-primary)',
             borderRight: '1px solid var(--border-primary)',
@@ -1292,8 +1293,9 @@ public:
             RIGHT PANE: LIVE MONACO CODE & SANDBOX
            ============================================== */}
         <div
-          className={`${mobileTab === 'code' ? 'flex' : 'hidden'} lg:flex`}
+          className={`mission-right-pane ${mobileTab === 'code' ? 'is-active' : 'is-hidden'}`}
           style={{
+            display: 'flex',
             flexDirection: 'column',
             backgroundColor: 'var(--bg-primary)',
             overflow: 'hidden',
