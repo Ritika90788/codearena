@@ -615,11 +615,26 @@ class Solution:
           }
         } else if (problemId) {
           // Direct Problem Mode
-          const pRes = await api.get(`/problems/${problemId}`);
-          if (pRes.success && pRes.problem) {
-            setProblem(pRes.problem);
-            setCode(getLanguageStarter(language, pRes.problem));
-            setTestCases(pRes.testCases || []);
+          try {
+            const pRes = await api.get(`/problems/${problemId}`);
+            if (pRes.success && pRes.problem) {
+              setProblem(pRes.problem);
+              setCode(getLanguageStarter(language, pRes.problem));
+              setTestCases(pRes.testCases || []);
+            } else {
+              throw new Error('Problem not found');
+            }
+          } catch (pErr) {
+            console.warn('Problem ID not found, loading fallback:', pErr.message);
+            const allRes = await api.get('/problems?limit=10');
+            if (allRes.success && allRes.problems && allRes.problems.length > 0) {
+              const fallback = allRes.problems.find((p) => p.slug === 'two-sum') || allRes.problems[0];
+              setProblem(fallback);
+              setCode(getLanguageStarter(language, fallback));
+              setTestCases(fallback.testCases || []);
+            } else {
+              error('Problem not found');
+            }
           }
         }
       } catch (err) {

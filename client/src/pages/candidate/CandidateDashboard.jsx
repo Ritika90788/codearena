@@ -51,6 +51,7 @@ export const CandidateDashboard = () => {
 
   const [solvedProblemsList, setSolvedProblemsList] = useState([]);
   const [assessmentsList, setAssessmentsList] = useState([]);
+  const [dailyProblemId, setDailyProblemId] = useState('6ac756d9d23fcd6d0b20fc98');
 
   const displayName = user?.name ? user.name.split(' ')[0] : 'Developer';
   const initial = displayName[0].toUpperCase();
@@ -117,6 +118,13 @@ export const CandidateDashboard = () => {
           easyTot = probs.filter((p) => p.difficulty === 'Easy').length || 10;
           medTot = probs.filter((p) => p.difficulty === 'Medium').length || 8;
           hardTot = probs.filter((p) => p.difficulty === 'Hard').length || 2;
+
+          const twoSum = probs.find((p) => p.slug === 'two-sum' || p.title?.toLowerCase().includes('two sum'));
+          if (twoSum?._id) {
+            setDailyProblemId(twoSum._id.toString());
+          } else if (probs[0]?._id) {
+            setDailyProblemId(probs[0]._id.toString());
+          }
         }
 
         const totalSolvedCount = solvedMap.size;
@@ -997,7 +1005,7 @@ export const CandidateDashboard = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <Link
-                to="/arena/6ac677eaaf3ba9ed8bf22588"
+                to={`/arena/${dailyProblemId}`}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
